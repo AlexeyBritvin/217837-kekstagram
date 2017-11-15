@@ -1,0 +1,26 @@
+{
+  "name": "kekstagram",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Личный проект «Кекстаграм» от HTML Academy",
+  "author": "Алексей Бритвин",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:htmlacademy-javascript/217837-kekstagram.git"
+  },
+  "bugs": {
+    "url": "https://github.com/htmlacademy-javascript/217837-kekstagram/issues"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "4.2.0",
+    "eslint-config-htmlacademy": "0.3.x"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "eslint js/"
+  },
+  "engines": {
+    "node": "^6.10"
+  }
+}
