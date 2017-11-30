@@ -2,75 +2,74 @@
 
 var photos = [];
 
-var generatePhotosArray = function () {
-  var comments = [
-    'Всё отлично!',
-    'В целом всё неплохо. Но не всё.',
-    'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-    'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-    'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-    'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-  ];
+var commentParts = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
 
-  var generateComment = function () {
-    var number = Math.floor(Math.random());
-    var comment;
+var generateComments = function () {
+  var number = Math.floor(Math.random());
+  var comments = [];
 
-    if (number === 0) {
-      comment = comments[Math.floor(Math.random() * comments.length)];
-    } else {
-      var firstCommentPart = comments[Math.floor(Math.random() * comments.length)];
-      var secondCommentPart = comments[Math.floor(Math.random() * comments.length)];
+  function getRandomComment() {
+    var commentPart = commentParts[Math.floor(Math.random() * commentParts.length)];
+    return commentPart;
+  }
 
-      comment = firstCommentPart + ' ' + secondCommentPart;
-    }
+  if (number === 0) {
+    comments.push(getRandomComment());
+  } else {
+    var firstCommentPart = getRandomComment();
+    var secondCommentPart = getRandomComment();
 
-    return comment;
+    comments.push(firstCommentPart + ' ' + secondCommentPart);
+  }
+
+  return comments;
+};
+
+for (var i = 1; i <= 25; i++) {
+  var likesNumber = Math.floor(Math.random() * (200 - 15) + 15);
+
+  var photo = {
+    url: 'photos/' + i + '.jpg',
+    likes: likesNumber,
+    comments: generateComments()
   };
 
-  for (var i = 1; i <= 25; i++) {
-    var likesNumber = Math.floor(Math.random() * (200 - 15) + 15);
+  photos.push(photo);
+}
 
-    var photo = {
-      url: 'photos/' + i + '.jpg',
-      likes: likesNumber,
-      comments: generateComment()
-    };
-
-    photos.push(photo);
-  }
-}();
-
-function renderPicture (photo) {
+function renderPicture(picture) {
   var pictureTemplate = document.querySelector('#picture-template').content.querySelector('.picture');
   var pictureElement = pictureTemplate.cloneNode(true);
 
-  var img = pictureElement.querySelector('img').setAttribute('src', photo.url);
-  var pictureLikes = pictureElement.querySelector('.picture-likes').textContent = photo.likes;
-  var pictureComment = pictureElement.querySelector('.picture-comments').textContent = photo.comment;
+  pictureElement.querySelector('img').setAttribute('src', picture.url);
+  pictureElement.querySelector('.picture-likes').textContent = picture.likes;
+  pictureElement.querySelector('.picture-comments').textContent = picture.comments.length;
 
   return pictureElement;
-};
+}
 
-var insertPictures = function () {
-  var fragment = document.createDocumentFragment();
-  var pictures = document.querySelector('.pictures');
+var fragment = document.createDocumentFragment();
+var pictures = document.querySelector('.pictures');
 
-  for (var i = 0; i < photos.length; i++) {
-    fragment.appendChild(renderPicture(photos[i]));
-  }
+for (var j = 0; j < photos.length; j++) {
+  fragment.appendChild(renderPicture(photos[j]));
+}
 
-  pictures.appendChild(fragment);
-}();
+pictures.appendChild(fragment);
 
-var showGallery = function () {
-  var gallery = document.querySelector('.gallery-overlay');
-  var galleryImage = gallery.querySelector('.gallery-overlay-image');
-  var galleryLikes = gallery.querySelector('.likes-count');
-  var galleryComments = gallery.querySelector('.comments-count');
+var gallery = document.querySelector('.gallery-overlay');
+var galleryImage = gallery.querySelector('.gallery-overlay-image');
+var galleryLikes = gallery.querySelector('.likes-count');
+var galleryComments = gallery.querySelector('.comments-count');
 
-  gallery.classList.remove('hidden');
-  galleryImage.setAttribute('src', photos[0].url);
-  galleryLikes.textContent = photos[0].likes;
-  galleryComments.textContent = photos[0].comment;
-}();
+gallery.classList.remove('hidden');
+galleryImage.setAttribute('src', photos[0].url);
+galleryLikes.textContent = photos[0].likes;
+galleryComments.textContent = photos[0].comments.length;
