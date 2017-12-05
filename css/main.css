@@ -34,6 +34,14 @@ body {
   padding: 15px 0;
 
   text-align: center;
+
+  opacity: 1;
+
+  transition: opacity 200ms ease-in;
+}
+
+.filters-inactive {
+  opacity: 0;
 }
 
 .filters-item {
@@ -81,21 +89,22 @@ body {
   left: 0;
   z-index: 2;
 
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   padding: 60px 0;
-  box-sizing: border-box;
+  overflow: auto;
 
   background: rgba(0, 0, 0, 0.8);
   border: none;
-  overflow: auto;
 }
 
 .upload-image {
-  width: 582px;
-  height: 569px;
   position: relative;
   z-index: 1;
+
+  width: 582px;
+  height: 569px;
 
   background: url("../img/logo-mask.png") no-repeat center;
 }
@@ -104,6 +113,7 @@ body {
   display: flex;
   justify-content: center;
   margin: 0 auto;
+
   text-align: center;
 }
 
@@ -112,9 +122,9 @@ body {
 }
 
 .upload-effect-preview {
-  background-image: url('../img/upload-default-image.jpg');
-  background-position: center;
+  background-image: url("../img/upload-default-image.jpg");
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .upload-effect-label-chrome .upload-effect-preview,
@@ -201,20 +211,19 @@ body {
 }
 
 .upload-form-cancel {
-  display: block;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-
   position: absolute;
   top: 0;
   left: 100%;
-  margin-left: 10px;
 
-  border: 0;
-  border-radius: 2px;
+  display: block;
+  width: 42px;
+  height: 42px;
+  margin-left: 10px;
+  padding: 0;
 
   background: rgba(255, 255, 255, 0.2) url("../img/icon-cross.png") center no-repeat;
+  border: 0;
+  border-radius: 2px;
 }
 
 .upload-form-cancel:active {
@@ -227,9 +236,9 @@ body {
   top: 0;
   left: 50%;
   z-index: 1;
-  transform: translateX(-50%);
 
   border: 0;
+  transform: translateX(-50%);
 }
 
 .upload-resize-control {
@@ -239,9 +248,9 @@ body {
   padding: 0;
 
   font: 700 20px/33px "Open Sans";
-  color: #fff;
-  text-align: center;
   vertical-align: top;
+  text-align: center;
+  color: #ffffff;
 
   background: rgba(0, 0, 0, 0.56);
   border: 0;
@@ -323,52 +332,48 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   display: block;
   width: 70px;
   height: 70px;
-
+  margin-bottom: 5px;
   overflow: hidden;
-  background-size: 100% auto;
+
   background-position: center;
+  background-size: 100% auto;
   border: solid 4px transparent;
   border-radius: 5px;
-
-  margin-bottom: 5px;
 }
 
 /* Слайдер. Регулировка глубины фильтра */
 .upload-effect-level {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+
+  box-sizing: border-box;
   width: 495px;
   height: 33px;
 
-  box-sizing: border-box;
-
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: -60px;
-
   background: rgba(0, 0, 0, 0.6);
   border-radius: 33px;
+  transform: translateX(-50%);
 }
 
 .upload-effect-level-line {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  left: 20px;
+
   height: 5px;
 
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-
   background: rgba(255, 231, 81, 0.4);
+  transform: translateY(-50%);
 }
 
 .upload-effect-level-pin {
-  width: 18px;
-  height: 18px;
-
   position: absolute;
-  left: 20%;
   top: 50%;
 
+  width: 18px;
+  height: 18px;
   margin: -9px 0 0;
 
   background: #ffe753;
@@ -378,64 +383,61 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 }
 
 .upload-effect-level-val {
+  position: absolute;
+
   width: 20%;
   height: 100%;
-
-  position: absolute;
 
   background: #ffe753;
 }
 
 /* Хэш-теги */
 .upload-form-hashtags {
+  display: block;
   width: 470px;
+  margin: 0 auto 30px;
+  padding: 8px 10px;
 
   font: 18px "Open Sans";
   color: #9a9a9a;
-
-  display: block;
-  margin: 0 auto 30px;
-  padding: 8px 10px;
 
   border-radius: 5px;
 }
 
 .upload-form-hashtags:focus {
-  color: #000;
+  color: #000000;
 }
 
 /* Описание */
 .upload-form-description {
+  display: block;
   width: 470px;
   height: 4em;
+  margin: 0 auto 30px;
+  padding: 20px 10px;
 
   font: 14px "Open Sans";
   color: #9a9a9a;
-
-  display: block;
-  margin: 0 auto 30px;
-  padding: 20px 10px;
 
   border-radius: 5px;
 }
 
 .upload-form-description:focus {
-  color: #000;
+  color: #000000;
 }
 
 /* Кнопка отправки */
 .upload-form-submit {
-  padding: 0 20px;
   margin-bottom: 30px;
+  padding: 0 20px;
 
   font: 14px "Open Sans";
   font-weight: 900;
+  line-height: 46px;
+  text-align: center;
   color: #ffe753;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-
-  line-height: 46px;
-  text-align: center;
 
   background: rgba(255, 231, 82, 0.2);
   border: 0;
@@ -672,7 +674,7 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   }
 }
 
-@media only screen and (max-width: 999px){
+@media only screen and (max-width: 999px) {
   .picture:nth-child(1) {
     margin-right: 600px;
   }
@@ -785,7 +787,7 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 
   box-sizing: border-box;
   height: 115px;
-  padding: 20px 0 40px;
+  padding: 20px 20px 40px;
 
   font-size: 12px;
   font-family: Roboto, Arial, sans-serif;
