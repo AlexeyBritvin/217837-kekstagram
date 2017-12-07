@@ -75,6 +75,7 @@
 
   var openGallery = function () {
     gallery.classList.remove('hidden');
+    gallery.focus();
     galleryCloseIcon.addEventListener('keydown', onGalleryCloseIconEnterPress);
     document.addEventListener('keydown', onGalleryEscPress);
   };
