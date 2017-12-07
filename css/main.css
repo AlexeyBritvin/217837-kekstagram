@@ -701,6 +701,10 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   background: rgba(0, 0, 0, 0.8);
 }
 
+.gallery-overlay:focus {
+  outline: none;
+}
+
 .gallery-overlay-close {
   position: absolute;
   top: -5px;
