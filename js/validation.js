@@ -13,7 +13,7 @@
   var checkCopiesInArray = function (array) {
     for (var i = 0; i < array.length - 1; i++) {
       for (var j = 1; j < array.length; j++) {
-        if (array[i] === array[j] && i !== j) {
+        if (array[i].toLowerCase() === array[j].toLowerCase() && i !== j) {
           return false;
         }
       }
@@ -146,5 +146,5 @@
   };
 
   hashtagsInput.addEventListener('change', onHashtagsInput);
-  uploadFormSubmit.addEventListener('click', validateForm);
+  uploadFormSubmit.addEventListener('submit', validateForm);
 })();
