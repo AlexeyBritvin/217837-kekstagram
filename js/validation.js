@@ -8,7 +8,6 @@
   var commentField = uploadForm.querySelector('.upload-form-description');
   var imagePreview = uploadForm.querySelector('.effect-image-preview');
   var effectControls = uploadForm.querySelector('.upload-effect-controls');
-  var uploadFormSubmit = uploadForm.querySelector('.upload-form-submit');
   var ESC_KEYCODE = 27;
 
   var checkCopiesInArray = function (array) {
