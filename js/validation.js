@@ -2,7 +2,8 @@
 
 (function () {
   var fileUploadInput = document.querySelector('#upload-file');
-  var uploadForm = document.querySelector('.upload-overlay');
+  var uploadForm = document.querySelector('.upload-form');
+  var uploadFormOverlay = uploadForm.querySelector('.upload-overlay');
   var uploadFormCloseIcon = uploadForm.querySelector('.upload-form-cancel');
   var commentField = uploadForm.querySelector('.upload-form-description');
   var imagePreview = uploadForm.querySelector('.effect-image-preview');
@@ -22,12 +23,12 @@
   };
 
   var openCustomizeForm = function () {
-    uploadForm.classList.remove('hidden');
+    uploadFormOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onUploadFormEscPress);
   };
 
   var closeCustomizeForm = function () {
-    uploadForm.classList.add('hidden');
+    uploadFormOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onUploadFormEscPress);
   };
 
@@ -58,6 +59,7 @@
   var SCALE_STEP = 25;
   var MAX_SCALE = 100;
   var MIN_SCALE = 25;
+  var stopSubmit = false;
 
   var increaseScale = function () {
     scale.value = parseInt(scale.value, 10) + SCALE_STEP + ' %';
@@ -91,22 +93,20 @@
       showErrorMessages(input);
       input.classList.add('upload-message-error');
     } else {
-      var errorMessage = uploadForm.querySelector('.upload-field-error');
-      if (errorMessage) {
-        errorMessage.parentElement.removeChild(errorMessage);
-      }
-      input.classList.remove('upload-message-error');
+      stopSubmit = false;
+      deleteErrors(input);
     }
   };
 
   var validateForm = function (event) {
-    if (errorMessages.length !== 0) {
+    if (errorMessages.length !== 0 && stopSubmit === true) {
       event.preventDefault();
     }
   };
 
   var addErrorMessage = function (message) {
     errorMessages.push(message);
+    stopSubmit = true;
   };
 
   var showErrorMessages = function (input) {
@@ -119,9 +119,21 @@
     }
   };
 
-  var onHashtagsInput = function () {
-    var hashtags = hashtagsInput.value.split(' ');
+  var deleteErrors = function (input) {
     errorMessages.length = 0;
+    var fieldErrors = uploadForm.querySelectorAll('.upload-field-error');
+    if (fieldErrors) {
+      for (var i = 0; i < fieldErrors.length; i++) {
+        var fieldError = fieldErrors[i];
+        fieldError.parentElement.removeChild(fieldError);
+      }
+    }
+    input.classList.remove('upload-message-error');
+  };
+
+  var onHashtagsChange = function () {
+    var hashtags = hashtagsInput.value.split(' ');
+    deleteErrors(hashtagsInput);
 
     if (hashtags.length > 5) {
       addErrorMessage('Хэштегов не должно быть больше 5');
@@ -135,16 +147,14 @@
       var hashtag = hashtags[i];
 
       if (hashtag.charAt(0) !== '#') {
-        hashtagsInput.setCustomValidity('Хэштеги должны начинаться со знака #');
+        addErrorMessage('Хэштеги должны начинаться со знака #');
       } else if (hashtag.length > 20) {
-        hashtagsInput.setCustomValidity('Длина хэштега не должна превышать 20 символов');
-      } else {
-        hashtagsInput.setCustomValidity('');
+        addErrorMessage('Длина хэштега не должна превышать 20 символов');
       }
     }
     validateField(hashtagsInput);
   };
 
-  hashtagsInput.addEventListener('change', onHashtagsInput);
-  uploadFormSubmit.addEventListener('submit', validateForm);
+  hashtagsInput.addEventListener('change', onHashtagsChange);
+  uploadForm.addEventListener('submit', validateForm);
 })();
