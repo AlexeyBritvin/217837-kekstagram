@@ -8,7 +8,6 @@
   var commentField = uploadForm.querySelector('.upload-form-description');
   var imagePreview = uploadForm.querySelector('.effect-image-preview');
   var effectControls = uploadForm.querySelector('.upload-effect-controls');
-  var ESC_KEYCODE = 27;
 
   var checkCopiesInArray = function (array) {
     for (var i = 0; i < array.length - 1; i++) {
@@ -32,7 +31,7 @@
   };
 
   var onUploadFormEscPress = function (event) {
-    if (event.keyCode === ESC_KEYCODE && document.activeElement !== commentField) {
+    if (event.keyCode === window.util.ESC_KEYCODE && document.activeElement !== commentField) {
       closeCustomizeForm();
     }
   };
@@ -55,10 +54,10 @@
   var resizeIncrement = resizeControls.querySelector('.upload-resize-controls-button-inc');
   var resizeDecrement = resizeControls.querySelector('.upload-resize-controls-button-dec');
   var scale = resizeControls.querySelector('.upload-resize-controls-value');
+  var stopSubmit = false;
   var SCALE_STEP = 25;
   var MAX_SCALE = 100;
   var MIN_SCALE = 25;
-  var stopSubmit = false;
 
   var increaseScale = function () {
     scale.value = parseInt(scale.value, 10) + SCALE_STEP + ' %';
