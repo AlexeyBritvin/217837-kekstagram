@@ -371,7 +371,7 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 .upload-effect-level-pin {
   position: absolute;
   top: 50%;
-
+  z-index: 5;
   width: 18px;
   height: 18px;
   margin: -9px 0 0;

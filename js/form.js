@@ -43,6 +43,8 @@
     if (event.target.tagName === 'INPUT') {
       var effectClass = event.target.id.slice(7);
       imagePreview.className = 'effect-image-preview ' + effectClass;
+      setSliderDefault();
+      getPreviewClass();
     } else {
       return;
     }
@@ -155,4 +157,122 @@
 
   hashtagsInput.addEventListener('change', onHashtagsChange);
   uploadForm.addEventListener('submit', validateForm);
+
+  var slider = uploadForm.querySelector('.upload-effect-level');
+  var sliderPin = slider.querySelector('.upload-effect-level-pin');
+  var sliderValue = slider.querySelector('.upload-effect-level-value');
+  var sliderConnect = slider.querySelector('.upload-effect-level-val');
+  var SLIDER_WIDTH = 455;
+  var FILTERS = {
+    chrome: {
+      style: 'grayscale',
+      range: [0, 1]
+    },
+    sepia: {
+      style: 'sepia',
+      range: [0, 1]
+    },
+    invert: {
+      style: 'invert',
+      range: [0, 1],
+      percent: true
+    },
+    blur: {
+      style: 'blur',
+      range: [0, 3],
+      pixels: true
+    },
+    brightness: {
+      style: 'brightness',
+      range: [0, 3]
+    }
+  };
+
+  sliderValue.classList.add('hidden');
+
+  var setSliderDefault = function () {
+    sliderPin.style.left = '20%';
+    sliderConnect.style.width = '20%';
+  };
+
+  var getPreviewClass = function () {
+    var filterClass = imagePreview.classList.toString().split(' ')[1];
+    var filterName = filterClass.split('-')[1];
+    setFilterParameters(FILTERS.filterName);
+    if (imagePreview.classList.contains('effect-chrome')) {
+      setFilterParameters(FILTERS.chrome);
+    } else if (imagePreview.classList.contains('effect-sepia')) {
+      setFilterParameters(FILTERS.sepia);
+    } else if (imagePreview.classList.contains('effect-marvin')) {
+      setFilterParameters(FILTERS.invert);
+    } else if (imagePreview.classList.contains('effect-phobos')) {
+      setFilterParameters(FILTERS.blur);
+    } else if (imagePreview.classList.contains('effect-heat')) {
+      setFilterParameters(FILTERS.brightness);
+    }
+  };
+
+  var dragPin = function (event) {
+    event.preventDefault();
+    var startCoords = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    var onMouseUp = function () {
+      slider.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    var onMouseMove = function (mouseEvt) {
+      var shift = {
+        x: startCoords.x - mouseEvt.clientX,
+        y: startCoords.y - mouseEvt.clientY
+      };
+
+      startCoords = {
+        x: mouseEvt.clientX,
+        y: mouseEvt.clientY
+      };
+
+      sliderPin.style.left = (sliderPin.offsetLeft - shift.x) / SLIDER_WIDTH * 100 + '%';
+      sliderConnect.style.width = sliderPin.style.left;
+      sliderValue.value = parseInt(sliderPin.style.left, 10);
+
+      if (parseInt(sliderPin.style.left, 10) < 0) {
+        sliderPin.style.left = 0 + '%';
+      }
+      if (parseInt(sliderPin.style.left, 10) > 100) {
+        sliderPin.style.left = 100 + '%';
+      }
+      // setFilterParameters.updateValue();
+    };
+
+    slider.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
+  sliderPin.addEventListener('mousedown', dragPin);
+
+  var setFilterParameters = function (filter) {
+    console.log(filter);
+    var range = {
+      min: filter.range[0],
+      max: filter.range[1]
+    };
+
+    var updateValue = function () {
+      var value = sliderValue.value / 100 * range.max;
+
+      if (filter.percent === true) {
+        value += '%';
+      }
+
+      if (filter.pixels === true) {
+        value += 'px';
+      }
+      return value;
+    };
+    return updateValue();
+  };
 })();
