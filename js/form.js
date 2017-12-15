@@ -44,7 +44,7 @@
       var effectClass = event.target.id.slice(7);
       imagePreview.className = 'effect-image-preview ' + effectClass;
       setSliderDefault();
-      getPreviewClass();
+      showSlider();
     } else {
       return;
     }
@@ -172,47 +172,50 @@
       style: 'sepia',
       range: [0, 1]
     },
-    invert: {
+    marvin: {
       style: 'invert',
       range: [0, 1],
       percent: true
     },
-    blur: {
+    phobos: {
       style: 'blur',
       range: [0, 3],
       pixels: true
     },
-    brightness: {
+    heat: {
       style: 'brightness',
       range: [0, 3]
     }
   };
 
+  slider.classList.add('hidden');
   sliderValue.classList.add('hidden');
 
   var setSliderDefault = function () {
     sliderPin.style.left = '20%';
     sliderConnect.style.width = '20%';
+    sliderValue.value = 20;
+    imagePreview.style.filter = '';
   };
 
   var getPreviewClass = function () {
     var filterClass = imagePreview.classList.toString().split(' ')[1];
-    var filterName = filterClass.split('-')[1];
-    setFilterParameters(FILTERS.filterName);
-    if (imagePreview.classList.contains('effect-chrome')) {
-      setFilterParameters(FILTERS.chrome);
-    } else if (imagePreview.classList.contains('effect-sepia')) {
-      setFilterParameters(FILTERS.sepia);
-    } else if (imagePreview.classList.contains('effect-marvin')) {
-      setFilterParameters(FILTERS.invert);
-    } else if (imagePreview.classList.contains('effect-phobos')) {
-      setFilterParameters(FILTERS.blur);
-    } else if (imagePreview.classList.contains('effect-heat')) {
-      setFilterParameters(FILTERS.brightness);
+    if (filterClass) {
+      var filterName = filterClass.split('-')[1];
+    }
+    return filterName;
+  };
+
+  var showSlider = function () {
+    var filterName = getPreviewClass();
+    if (filterName !== 'none') {
+      slider.classList.remove('hidden');
+    } else {
+      slider.classList.add('hidden');
     }
   };
 
-  var dragPin = function (event) {
+  var onPinMouseDown = function (event) {
     event.preventDefault();
     var startCoords = {
       x: event.clientX,
@@ -220,11 +223,11 @@
     };
 
     var onMouseUp = function () {
-      slider.removeEventListener('mousemove', onMouseMove);
+      slider.removeEventListener('mousemove', onPinMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
 
-    var onMouseMove = function (mouseEvt) {
+    var onPinMouseMove = function (mouseEvt) {
       var shift = {
         x: startCoords.x - mouseEvt.clientX,
         y: startCoords.y - mouseEvt.clientY
@@ -245,34 +248,28 @@
       if (parseInt(sliderPin.style.left, 10) > 100) {
         sliderPin.style.left = 100 + '%';
       }
-      // setFilterParameters.updateValue();
+      updateSlider();
     };
 
-    slider.addEventListener('mousemove', onMouseMove);
+    slider.addEventListener('mousemove', onPinMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  sliderPin.addEventListener('mousedown', dragPin);
+  sliderPin.addEventListener('mousedown', onPinMouseDown);
 
-  var setFilterParameters = function (filter) {
-    console.log(filter);
-    var range = {
-      min: filter.range[0],
-      max: filter.range[1]
-    };
+  var updateSlider = function () {
+    var filterName = getPreviewClass();
+    var filter = FILTERS[filterName];
+    var value = sliderValue.value / 100 * filter.range[1];
 
-    var updateValue = function () {
-      var value = sliderValue.value / 100 * range.max;
+    if (filter.percent === true) {
+      value = value * 100 + '%';
+    }
 
-      if (filter.percent === true) {
-        value += '%';
-      }
-
-      if (filter.pixels === true) {
-        value += 'px';
-      }
-      return value;
-    };
-    return updateValue();
+    if (filter.pixels === true) {
+      value += 'px';
+    }
+    imagePreview.style.filter = filter.style + '(' + value + ')';
   };
+
 })();
