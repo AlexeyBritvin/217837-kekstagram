@@ -223,7 +223,7 @@
     };
 
     var onMouseUp = function () {
-      slider.removeEventListener('mousemove', onPinMouseMove);
+      document.removeEventListener('mousemove', onPinMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
 
@@ -251,7 +251,7 @@
       updateSlider();
     };
 
-    slider.addEventListener('mousemove', onPinMouseMove);
+    document.addEventListener('mousemove', onPinMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
 
