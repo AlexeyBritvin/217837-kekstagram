@@ -36,57 +36,29 @@
     }
   };
 
-  fileUploadInput.onchange = openCustomizeForm;
+  fileUploadInput.addEventListener('change', openCustomizeForm);
   uploadFormCloseIcon.addEventListener('click', closeCustomizeForm);
 
-  var onEffectControlsCLick = function (event) {
-    if (event.target.tagName === 'INPUT') {
-      var effectClass = event.target.id.slice(7);
+  var resizeControls = uploadForm.querySelector('.upload-resize-controls');
+  var hashtagsInput = uploadForm.querySelector('.upload-form-hashtags');
+  var stopSubmit = false;
+  var errorMessages = [];
+
+  var changeImageEffect = function (eventTarget) {
+    if (eventTarget.tagName === 'INPUT') {
+      var effectClass = eventTarget.id.slice(7);
       imagePreview.className = 'effect-image-preview ' + effectClass;
       setSliderDefault();
       showSlider();
-    } else {
-      return;
     }
   };
 
-  effectControls.addEventListener('click', onEffectControlsCLick, true);
-
-  var resizeControls = uploadForm.querySelector('.upload-resize-controls');
-  var resizeIncrement = resizeControls.querySelector('.upload-resize-controls-button-inc');
-  var resizeDecrement = resizeControls.querySelector('.upload-resize-controls-button-dec');
-  var scale = resizeControls.querySelector('.upload-resize-controls-value');
-  var stopSubmit = false;
-  var SCALE_STEP = 25;
-  var MAX_SCALE = 100;
-  var MIN_SCALE = 25;
-
-  var increaseScale = function () {
-    scale.value = parseInt(scale.value, 10) + SCALE_STEP + ' %';
-    imagePreview.style.transform = 'scale(' + parseInt(scale.value, 10) / 100 + ')';
-    return scale.value;
+  var changeImageScale = function (scale) {
+    imagePreview.style.transform = 'scale(' + scale / 100 + ')';
   };
 
-  var decreaseScale = function () {
-    scale.value = parseInt(scale.value, 10) - SCALE_STEP + ' %';
-    imagePreview.style.transform = 'scale(' + parseInt(scale.value, 10) / 100 + ')';
-    return scale.value;
-  };
-
-  var onResizeControlsClick = function (event) {
-    if (event.target === resizeIncrement && parseInt(scale.value, 10) !== MAX_SCALE) {
-      scale.value = increaseScale();
-    } else if (event.target === resizeDecrement && parseInt(scale.value, 10) !== MIN_SCALE) {
-      scale.value = decreaseScale();
-    } else {
-      return;
-    }
-  };
-
-  resizeControls.addEventListener('click', onResizeControlsClick, true);
-
-  var hashtagsInput = uploadForm.querySelector('.upload-form-hashtags');
-  var errorMessages = [];
+  window.initFilters(effectControls, changeImageEffect);
+  window.initScale(resizeControls, changeImageScale);
 
   var validateField = function (input) {
     if (errorMessages.length !== 0) {
