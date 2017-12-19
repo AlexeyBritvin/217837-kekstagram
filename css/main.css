@@ -24,10 +24,6 @@ body {
   color: #ffe753;
 }
 
-.hidden {
-  display: none;
-}
-
 /* Фильтры */
 
 .filters {
@@ -210,7 +206,8 @@ body {
   border: 0;
 }
 
-.upload-form-cancel {
+.upload-form-cancel,
+.upload-errors-cancel {
   position: absolute;
   top: 0;
   left: 100%;
@@ -686,7 +683,8 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   }
 }
 
-.gallery-overlay {
+.gallery-overlay,
+.errors-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -701,7 +699,8 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.gallery-overlay:focus {
+.gallery-overlay:focus,
+.errors-overlay:focus {
   outline: none;
 }
 
@@ -783,6 +782,34 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   background-position-x: -18px;
 }
 
+.errors-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-errors {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+.upload-errors-title {
+  font-size: 24px;
+  color: #000000;
+}
+
+.upload-errors-text {
+  font-size: 16px;
+  color: #000000;
+}
+
 .footer {
   position: absolute;
   right: 10px;
@@ -855,8 +882,6 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   opacity: 1;
 }
 
-
-
 .footer-social-item-instagram {
   background-position: -28px 0;
 }
@@ -867,4 +892,8 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 
 .footer-social-item-vk {
   background-position: -84px 0;
+}
+
+.hidden {
+  display: none;
 }

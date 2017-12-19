@@ -113,6 +113,14 @@
 
 <div class="pictures container" style="font-size: 12px;"></div>
 
+<div class="errors-overlay hidden" tabindex="-1">
+  <div class="upload-errors">
+   <button class="upload-errors-cancel" tabindex="0"></button>
+    <span class="upload-errors-title">Произошла ошибка!</span>
+    <p class="upload-errors-text"></p>
+  </div>
+</div>
+
 <footer class="footer container">
   <div class="center-wrapper">
     <section class="footer-logo">
@@ -154,7 +162,7 @@
 </template>
 
 <script src="js/util.js"></script>
-<script src="js/data.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/picture.js"></script>
 <script src="js/preview.js"></script>
 <script src="js/gallery.js"></script>
