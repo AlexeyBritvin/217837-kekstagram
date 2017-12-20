@@ -244,4 +244,21 @@
     imagePreview.style.filter = filter.style + '(' + value + ')';
   };
 
+  var sendFormData = function () {
+    uploadFormOverlay.classList.add('hidden');
+  };
+
+  var onErrorSend = function () {
+    console.log('error');
+  };
+
+  var onUploadFormSubmit = function (event) {
+    if (stopSubmit !== true) {
+      event.preventDefault();
+      var formData = new FormData(uploadForm);
+      window.backend.save(formData, sendFormData, window.onError);
+    }
+  };
+
+  uploadForm.addEventListener('submit', onUploadFormSubmit);
 })();

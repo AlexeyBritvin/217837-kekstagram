@@ -33,12 +33,12 @@
     pictures.appendChild(fragment);
   };
 
-  var onError = function (error) {
+  window.onError = function (error) {
     openErrorsContainer();
     errorText.textContent = error;
   };
 
-  window.backend.load(getData, onError);
+  window.backend.load(getData, window.onError);
 
   pictures.addEventListener('click', window.preview.onPictureClick, true);
   errorsCloseIcon.addEventListener('click', onErrorsCloseIconClick);
