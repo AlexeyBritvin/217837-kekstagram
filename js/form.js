@@ -248,6 +248,7 @@
     uploadFormOverlay.classList.add('hidden');
     uploadForm.reset();
     imagePreview.className = 'effect-image-preview effect-none';
+    imagePreview.removeAttribute('style');
     slider.classList.add('hidden');
   };
 
