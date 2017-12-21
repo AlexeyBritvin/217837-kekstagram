@@ -244,4 +244,21 @@
     imagePreview.style.filter = filter.style + '(' + value + ')';
   };
 
+  var sendFormData = function () {
+    uploadFormOverlay.classList.add('hidden');
+    uploadForm.reset();
+    imagePreview.className = 'effect-image-preview effect-none';
+    imagePreview.removeAttribute('style');
+    slider.classList.add('hidden');
+  };
+
+  var onUploadFormSubmit = function (event) {
+    if (stopSubmit !== true) {
+      event.preventDefault();
+      var formData = new FormData(uploadForm);
+      window.backend.save(formData, sendFormData, window.onError);
+    }
+  };
+
+  uploadForm.addEventListener('submit', onUploadFormSubmit);
 })();
