@@ -246,6 +246,9 @@
 
   var sendFormData = function () {
     uploadFormOverlay.classList.add('hidden');
+    uploadForm.reset();
+    imagePreview.className = 'effect-image-preview effect-none';
+    slider.classList.add('hidden');
   };
 
   var onUploadFormSubmit = function (event) {
