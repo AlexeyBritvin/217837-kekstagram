@@ -248,10 +248,6 @@
     uploadFormOverlay.classList.add('hidden');
   };
 
-  var onErrorSend = function () {
-    console.log('error');
-  };
-
   var onUploadFormSubmit = function (event) {
     if (stopSubmit !== true) {
       event.preventDefault();
