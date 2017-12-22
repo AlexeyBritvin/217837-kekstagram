@@ -1,6 +1,31 @@
 'use strict';
 
 (function () {
+  var SLIDER_WIDTH = 455;
+  var FILTERS = {
+    chrome: {
+      style: 'grayscale',
+      range: [0, 1]
+    },
+    sepia: {
+      style: 'sepia',
+      range: [0, 1]
+    },
+    marvin: {
+      style: 'invert',
+      range: [0, 1],
+      percent: true
+    },
+    phobos: {
+      style: 'blur',
+      range: [0, 3],
+      pixels: true
+    },
+    heat: {
+      style: 'brightness',
+      range: [0, 3]
+    }
+  };
   var fileUploadInput = document.querySelector('#upload-file');
   var uploadForm = document.querySelector('.upload-form');
   var uploadFormOverlay = uploadForm.querySelector('.upload-overlay');
@@ -134,31 +159,6 @@
   var sliderPin = slider.querySelector('.upload-effect-level-pin');
   var sliderValue = slider.querySelector('.upload-effect-level-value');
   var sliderConnect = slider.querySelector('.upload-effect-level-val');
-  var SLIDER_WIDTH = 455;
-  var FILTERS = {
-    chrome: {
-      style: 'grayscale',
-      range: [0, 1]
-    },
-    sepia: {
-      style: 'sepia',
-      range: [0, 1]
-    },
-    marvin: {
-      style: 'invert',
-      range: [0, 1],
-      percent: true
-    },
-    phobos: {
-      style: 'blur',
-      range: [0, 3],
-      pixels: true
-    },
-    heat: {
-      style: 'brightness',
-      range: [0, 3]
-    }
-  };
 
   slider.classList.add('hidden');
   sliderValue.classList.add('hidden');

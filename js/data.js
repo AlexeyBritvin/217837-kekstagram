@@ -1,10 +1,10 @@
 'use strict';
 
 window.data = (function () {
-  var photos = [];
   var MAX_LIKES = 200;
   var MIN_LIKES = 15;
   var NUMBER_OF_PHOTOS = 25;
+  var photos = [];
 
   var commentParts = [
     'Всё отлично!',

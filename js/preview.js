@@ -17,8 +17,6 @@
         galleryImage.setAttribute('src', picture.querySelector('img').getAttribute('src'));
         galleryLikes.textContent = picture.querySelector('.picture-likes').textContent;
         galleryComments.textContent = picture.querySelector('.picture-comments').textContent;
-      } else {
-        return;
       }
     }
   };
