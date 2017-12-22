@@ -72,11 +72,7 @@
 
     var sortByLikes = function () {
       mostLiked.sort(function (a, b) {
-        if (a.likes > b.likes) {
-          return -1;
-        } else {
-          return 1;
-        }
+        return a.likes > b.likes ? -1 : 1;
       });
 
       appendRenderPhotos(mostLiked);
@@ -94,11 +90,7 @@
 
     var sortByComments = function () {
       mostCommented.sort(function (a, b) {
-        if (a.comments.length > b.comments.length) {
-          return -1;
-        } else {
-          return 1;
-        }
+        return a.comments.length > b.comments.length ? -1 : 1;
       });
 
       appendRenderPhotos(mostCommented);
