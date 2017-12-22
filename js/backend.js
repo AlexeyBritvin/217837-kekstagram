@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var OK_STATUS = 200;
+
   window.backend = {
     load: function (onLoad, onError) {
       var xhr = new XMLHttpRequest();
@@ -9,7 +11,7 @@
       xhr.open('GET', 'https://1510.dump.academy/kekstagram/data');
 
       var onSuccess = function () {
-        if (xhr.status === 200) {
+        if (xhr.status === OK_STATUS) {
           onLoad(xhr.response);
         } else {
           onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
@@ -36,7 +38,7 @@
       xhr.open('POST', 'https://1510.dump.academy/kekstagram');
 
       var onLoad = function () {
-        if (xhr.status === 200) {
+        if (xhr.status === OK_STATUS) {
           onSuccess(xhr.response);
         } else {
           onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);

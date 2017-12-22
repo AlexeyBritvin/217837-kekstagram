@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var SLIDER_DEFAULT_VALUE = 20;
   var SLIDER_WIDTH = 455;
   var FILTERS = {
     chrome: {
@@ -166,7 +167,7 @@
   var setSliderDefault = function () {
     sliderPin.style.left = '20%';
     sliderConnect.style.width = '20%';
-    sliderValue.value = 20;
+    sliderValue.value = SLIDER_DEFAULT_VALUE;
     imagePreview.style.filter = '';
   };
 
