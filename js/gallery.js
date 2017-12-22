@@ -62,7 +62,7 @@
     var randomFilter = document.querySelector('#filter-random');
     var mostLiked = photos.slice();
     var mostCommented = photos.slice();
-    var randomPhotos = [];
+    var randomPhotos = photos.slice();
 
     var sortByLikes = function () {
       mostLiked.sort(function (a, b) {
@@ -108,22 +108,12 @@
     };
 
     var showRandom = function () {
-      var getRandom = function () {
-        var num = Math.floor(Math.random() * randomPhotos.length);
-        return num;
-      };
-
-      for (var j = 0; j < photos.length; j++) {
-        var num = getRandom();
-        randomPhotos.push(photos[num]);
-      }
-
-      var filteredPhotos = randomPhotos.filter(function (photo, i) {
-        return randomPhotos.indexOf(photo) === i;
+      randomPhotos.sort(function () {
+        return Math.random() - 0.5;
       });
 
       cleanGallery();
-      filteredPhotos.forEach(function (item) {
+      randomPhotos.forEach(function (item) {
         fragment.appendChild(window.renderPicture(item));
       });
 
