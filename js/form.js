@@ -62,8 +62,16 @@
     }
   };
 
-  fileUploadInput.addEventListener('change', openCustomizeForm);
-  uploadFormCloseIcon.addEventListener('click', closeCustomizeForm);
+  var onFileUploadInputChange = function () {
+    openCustomizeForm();
+  };
+
+  var onUploadFormCloseIconClick = function () {
+    closeCustomizeForm();
+  };
+
+  fileUploadInput.addEventListener('change', onFileUploadInputChange);
+  uploadFormCloseIcon.addEventListener('click', onUploadFormCloseIconClick);
 
   var resizeControls = uploadForm.querySelector('.upload-resize-controls');
   var hashtagsInput = uploadForm.querySelector('.upload-form-hashtags');
@@ -73,7 +81,8 @@
   var changeImageEffect = function (eventTarget) {
     if (eventTarget.tagName === 'INPUT') {
       var effectClass = eventTarget.id.slice(7);
-      imagePreview.className = 'effect-image-preview ' + effectClass;
+      imagePreview.classList.remove(imagePreview.classList[1]);
+      imagePreview.classList.add(effectClass);
       setSliderDefault();
       showSlider();
     }
@@ -97,8 +106,10 @@
   };
 
   var validateForm = function (event) {
-    if (errorMessages.length !== 0 && stopSubmit === true) {
-      event.preventDefault();
+    event.preventDefault();
+    if (errorMessages.length === 0 && !stopSubmit) {
+      var formData = new FormData(uploadForm);
+      window.backend.save(formData, sendFormData, window.onError);
     }
   };
 
@@ -121,10 +132,9 @@
     errorMessages.length = 0;
     var fieldErrors = uploadForm.querySelectorAll('.upload-field-error');
     if (fieldErrors) {
-      for (var i = 0; i < fieldErrors.length; i++) {
-        var fieldError = fieldErrors[i];
+      fieldErrors.forEach(function (fieldError) {
         fieldError.parentElement.removeChild(fieldError);
-      }
+      });
     }
     input.classList.remove('upload-message-error');
   };
@@ -141,20 +151,18 @@
       addErrorMessage('Хэштеги должны быть уникальными');
     }
 
-    for (var i = 0; i < hashtags.length; i++) {
-      var hashtag = hashtags[i];
-
+    hashtags.forEach(function (hashtag) {
       if (hashtag.charAt(0) !== '#') {
         addErrorMessage('Хэштеги должны начинаться со знака #');
       } else if (hashtag.length > 20) {
         addErrorMessage('Длина хэштега не должна превышать 20 символов');
       }
-    }
+    });
+
     validateField(hashtagsInput);
   };
 
   hashtagsInput.addEventListener('change', onHashtagsChange);
-  uploadForm.addEventListener('submit', validateForm);
 
   var slider = uploadForm.querySelector('.upload-effect-level');
   var sliderPin = slider.querySelector('.upload-effect-level-pin');
@@ -235,11 +243,11 @@
     var filter = FILTERS[filterName];
     var value = sliderValue.value / 100 * filter.range[1];
 
-    if (filter.percent === true) {
+    if (filter.percent) {
       value = value * 100 + '%';
     }
 
-    if (filter.pixels === true) {
+    if (filter.pixels) {
       value += 'px';
     }
     imagePreview.style.filter = filter.style + '(' + value + ')';
@@ -248,17 +256,13 @@
   var sendFormData = function () {
     uploadFormOverlay.classList.add('hidden');
     uploadForm.reset();
-    imagePreview.className = 'effect-image-preview effect-none';
+    imagePreview.classList.remove(imagePreview.classList[1]);
     imagePreview.removeAttribute('style');
     slider.classList.add('hidden');
   };
 
   var onUploadFormSubmit = function (event) {
-    if (stopSubmit !== true) {
-      event.preventDefault();
-      var formData = new FormData(uploadForm);
-      window.backend.save(formData, sendFormData, window.onError);
-    }
+    validateForm(event);
   };
 
   uploadForm.addEventListener('submit', onUploadFormSubmit);

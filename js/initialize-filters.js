@@ -6,6 +6,10 @@
       action(event.target);
     };
 
-    element.addEventListener('click', doAction);
+    var onElementClick = function (event) {
+      doAction(event);
+    };
+
+    element.addEventListener('click', onElementClick);
   };
 })();
