@@ -6,8 +6,8 @@
   var MIN_SCALE = 25;
 
   window.initScale = function (scaleElement, changeScale) {
-    var inc = scaleElement.querySelector('.upload-resize-controls-button-inc');
-    var dec = scaleElement.querySelector('.upload-resize-controls-button-dec');
+    var increment = scaleElement.querySelector('.upload-resize-controls-button-inc');
+    var decrement = scaleElement.querySelector('.upload-resize-controls-button-dec');
     var scale = scaleElement.querySelector('.upload-resize-controls-value');
 
     var increaseScale = function () {
@@ -30,7 +30,15 @@
       }
     };
 
-    inc.addEventListener('click', increaseScale);
-    dec.addEventListener('click', decreaseScale);
+    var onIncrementClick = function () {
+      increaseScale();
+    };
+
+    var onDecrementClick = function () {
+      decreaseScale();
+    };
+
+    increment.addEventListener('click', onIncrementClick);
+    decrement.addEventListener('click', onDecrementClick);
   };
 })();
