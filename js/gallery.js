@@ -29,9 +29,9 @@
   };
 
   var getData = function (data) {
-    for (var j = 0; j < data.length; j++) {
-      fragment.appendChild(window.renderPicture(data[j]));
-    }
+    data.forEach(function (item) {
+      fragment.appendChild(window.renderPicture(item));
+    });
 
     photos = data;
     pictures.appendChild(fragment);

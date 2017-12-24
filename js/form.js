@@ -131,10 +131,9 @@
     errorMessages.length = 0;
     var fieldErrors = uploadForm.querySelectorAll('.upload-field-error');
     if (fieldErrors) {
-      for (var i = 0; i < fieldErrors.length; i++) {
-        var fieldError = fieldErrors[i];
+      fieldErrors.forEach(function (fieldError) {
         fieldError.parentElement.removeChild(fieldError);
-      }
+      });
     }
     input.classList.remove('upload-message-error');
   };
@@ -151,15 +150,14 @@
       addErrorMessage('Хэштеги должны быть уникальными');
     }
 
-    for (var i = 0; i < hashtags.length; i++) {
-      var hashtag = hashtags[i];
-
+    hashtags.forEach(function (hashtag) {
       if (hashtag.charAt(0) !== '#') {
         addErrorMessage('Хэштеги должны начинаться со знака #');
       } else if (hashtag.length > 20) {
         addErrorMessage('Длина хэштега не должна превышать 20 символов');
       }
-    }
+    });
+
     validateField(hashtagsInput);
   };
 
