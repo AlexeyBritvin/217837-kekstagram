@@ -106,7 +106,7 @@
 
   var validateForm = function (event) {
     event.preventDefault();
-    if (errorMessages.length === 0 && stopSubmit !== true) {
+    if (errorMessages.length === 0 && !stopSubmit) {
       var formData = new FormData(uploadForm);
       window.backend.save(formData, sendFormData, window.onError);
     }
@@ -244,11 +244,11 @@
     var filter = FILTERS[filterName];
     var value = sliderValue.value / 100 * filter.range[1];
 
-    if (filter.percent === true) {
+    if (filter.percent) {
       value = value * 100 + '%';
     }
 
-    if (filter.pixels === true) {
+    if (filter.pixels) {
       value += 'px';
     }
     imagePreview.style.filter = filter.style + '(' + value + ')';
