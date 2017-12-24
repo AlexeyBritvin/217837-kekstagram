@@ -70,44 +70,43 @@
     var mostCommented = photos.slice();
     var randomPhotos = photos.slice();
 
-    var sortByLikes = function () {
-      mostLiked.sort(function (a, b) {
-        return a.likes > b.likes ? -1 : 1;
-      });
+    var likesCompanator = function (a, b) {
+      return a.likes > b.likes ? -1 : 1;
+    };
 
-      appendRenderPhotos(mostLiked);
+    var commentsCompanator = function (a, b) {
+      return a.comments.length > b.comments.length ? -1 : 1;
+    };
+
+    var randomCompanator = function () {
+      return Math.random() - 0.5;
+    };
+
+    var sortBy = function (array, companator) {
+      if (typeof companator !== 'undefined') {
+        array.sort(companator);
+      }
+
+      appendRenderPhotos(array);
 
       cleanGallery();
       pictures.appendChild(fragment);
+    };
+
+    var sortByLikes = function () {
+      sortBy(mostLiked, likesCompanator);
     };
 
     var setDefault = function () {
-      appendRenderPhotos(photos);
-
-      cleanGallery();
-      pictures.appendChild(fragment);
+      sortBy(photos);
     };
 
     var sortByComments = function () {
-      mostCommented.sort(function (a, b) {
-        return a.comments.length > b.comments.length ? -1 : 1;
-      });
-
-      appendRenderPhotos(mostCommented);
-
-      cleanGallery();
-      pictures.appendChild(fragment);
+      sortBy(mostCommented, commentsCompanator);
     };
 
     var showRandom = function () {
-      randomPhotos.sort(function () {
-        return Math.random() - 0.5;
-      });
-
-      cleanGallery();
-      appendRenderPhotos(randomPhotos);
-
-      pictures.appendChild(fragment);
+      sortBy(randomPhotos, randomCompanator);
     };
 
     var onDefaultFilterClick = function () {
