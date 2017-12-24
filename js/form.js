@@ -81,7 +81,8 @@
   var changeImageEffect = function (eventTarget) {
     if (eventTarget.tagName === 'INPUT') {
       var effectClass = eventTarget.id.slice(7);
-      imagePreview.className = 'effect-image-preview ' + effectClass;
+      imagePreview.classList.remove(imagePreview.classList[1]);
+      imagePreview.classList.add(effectClass);
       setSliderDefault();
       showSlider();
     }
@@ -255,7 +256,7 @@
   var sendFormData = function () {
     uploadFormOverlay.classList.add('hidden');
     uploadForm.reset();
-    imagePreview.className = 'effect-image-preview effect-none';
+    imagePreview.classList.remove(imagePreview.classList[1]);
     imagePreview.removeAttribute('style');
     slider.classList.add('hidden');
   };
